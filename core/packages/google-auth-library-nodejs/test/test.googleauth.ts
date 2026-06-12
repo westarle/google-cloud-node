@@ -1141,6 +1141,36 @@ describe('googleauth', () => {
       assert.strictEqual('explicit_quota', client.quotaProjectId);
     });
 
+    it('quotaProjectId in clientOptions should take precedence over GOOGLE_CLOUD_QUOTA_PROJECT environment variable and JSON credentials file', async () => {
+      mockLinuxWellKnownFile(
+        './test/fixtures/config-with-quota/.config/gcloud/application_default_credentials.json',
+      );
+      mockEnvVar('GOOGLE_CLOUD_QUOTA_PROJECT', 'quota_from_env');
+      const customAuth = new GoogleAuth({
+        clientOptions: {
+          quotaProjectId: 'quota_from_options',
+        },
+      });
+      const result = await customAuth.getApplicationDefault();
+      const client = result.credential;
+      assert.strictEqual('quota_from_options', client.quotaProjectId);
+    });
+
+    it('quota_project_id in clientOptions should take precedence over GOOGLE_CLOUD_QUOTA_PROJECT environment variable and JSON credentials file', async () => {
+      mockLinuxWellKnownFile(
+        './test/fixtures/config-with-quota/.config/gcloud/application_default_credentials.json',
+      );
+      mockEnvVar('GOOGLE_CLOUD_QUOTA_PROJECT', 'quota_from_env');
+      const customAuth = new GoogleAuth({
+        clientOptions: {
+          quota_project_id: 'quota_from_options_snake',
+        },
+      });
+      const result = await customAuth.getApplicationDefault();
+      const client = result.credential;
+      assert.strictEqual('quota_from_options_snake', client.quotaProjectId);
+    });
+
     it('getApplicationDefault should use quota project id from file if environment variable is empty', async () => {
       mockLinuxWellKnownFile(
         './test/fixtures/config-with-quota/.config/gcloud/application_default_credentials.json',

@@ -530,7 +530,12 @@ export class GoogleAuth<T extends AuthClient = AuthClient> {
   ): Promise<ADCResponse> {
     const projectId = await this.getProjectIdOptional();
 
-    if (quotaProjectIdOverride) {
+    const builderQuotaProjectId =
+      this.clientOptions.quotaProjectId || this.clientOptions.quota_project_id;
+
+    if (builderQuotaProjectId) {
+      credential.quotaProjectId = builderQuotaProjectId;
+    } else if (quotaProjectIdOverride) {
       credential.quotaProjectId = quotaProjectIdOverride;
     }
 

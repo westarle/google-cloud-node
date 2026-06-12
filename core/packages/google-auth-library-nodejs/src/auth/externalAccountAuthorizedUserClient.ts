@@ -188,7 +188,7 @@ export class ExternalAccountAuthorizedUserClient extends AuthClient {
       });
 
     this.cachedAccessToken = null;
-    this.quotaProjectId = options.quota_project_id;
+    this.quotaProjectId = this.quotaProjectId || options.quota_project_id;
 
     // As threshold could be zero,
     // eagerRefreshThresholdMillis || EXPIRATION_TIME_OFFSET will override the
