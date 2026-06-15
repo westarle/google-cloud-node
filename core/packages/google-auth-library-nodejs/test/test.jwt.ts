@@ -586,6 +586,24 @@ describe('jwt', () => {
     assert.notStrictEqual(jwt, clone);
   });
 
+  it('should throw or reject during authorize if the private key is malformed', async () => {
+    const jwt = new JWT({
+      email: 'foo@serviceaccount.com',
+      key: 'invalid-private-key',
+      scopes: ['http://bar'],
+    });
+    await assert.rejects(jwt.authorize());
+  });
+
+  it('should throw or reject during getRequestHeaders if the private key is malformed', async () => {
+    const jwt = new JWT({
+      email: 'foo@serviceaccount.com',
+      key: 'invalid-private-key',
+      scopes: ['http://bar'],
+    });
+    await assert.rejects(jwt.getRequestHeaders());
+  });
+
   it('fromJson should error on null json', () => {
     assert.throws(() => {
       // Test verifies invalid parameter tests, which requires cast to any.
