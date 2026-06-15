@@ -62,11 +62,18 @@ describe('jwtaccess', () => {
 
   it('getRequestHeaders should sign with scopes if user supplied scopes', () => {
     const client = new JWTAccess(email, keys.private);
-    const headers = client.getRequestHeaders(testUri, undefined, 'myfakescope');
+    const headers = client.getRequestHeaders(undefined, undefined, 'myfakescope');
     const decoded = jws.decode(removeBearerFromAuthorizationHeader(headers));
     assert(decoded);
     const payload = decoded.payload;
     assert.strictEqual('myfakescope', payload.scope);
+  });
+
+  it('getRequestHeaders should throw error if both url and scopes are provided', () => {
+    const client = new JWTAccess(email, keys.private);
+    assert.throws(() => {
+      client.getRequestHeaders(testUri, undefined, 'myfakescope');
+    }, /Both url and scopes cannot be provided simultaneously/);
   });
 
   it('getRequestHeaders should sign with default if user did not supply scopes', () => {
@@ -190,20 +197,16 @@ describe('jwtaccess', () => {
     assert.strictEqual(json.client_email, client.email);
   });
 
-  it('should cache a key with scopes if url & scopes are passed', async () => {
+  it('should cache a key with scopes if url is missing & scopes are passed', async () => {
     const client = new JWTAccess(email, keys.private);
-    const testUri = 'http:/example.com/my_test_service';
-    const scopes = 'scope1';
-    const cacheKey = client.getCachedKey(testUri, scopes);
-    assert.strictEqual(cacheKey, `${testUri}_${scopes}`);
+    const cacheKey = client.getCachedKey(undefined, 'myfakescope');
+    assert.strictEqual(cacheKey, 'myfakescope');
   });
 
-  it('should cache a key with scopes if url & an array of scopes are passed', async () => {
+  it('should cache a key with scopes if url is missing & an array of scopes are passed', async () => {
     const client = new JWTAccess(email, keys.private);
-    const testUri = 'http:/example.com/my_test_service';
-    const scopes = ['scope1', 'scope2'];
-    const cacheKey = client.getCachedKey(testUri, scopes);
-    assert.strictEqual(cacheKey, `${testUri}_${scopes.join('_')}`);
+    const cacheKey = client.getCachedKey(undefined, ['scope1', 'scope2']);
+    assert.strictEqual(cacheKey, 'scope1_scope2');
   });
 
   it('should cache a key with a URL if nothing else is passed into cacheKey', async () => {

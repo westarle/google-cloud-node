@@ -923,7 +923,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );
@@ -967,7 +967,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );
@@ -989,7 +989,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );
@@ -1012,7 +1012,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );
@@ -1034,7 +1034,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );
@@ -1057,7 +1057,7 @@ describe('jwt', () => {
       sandbox.assert.calledOnce(stubJWTAccess);
       sandbox.assert.calledWith(
         stubGetRequestHeaders,
-        'https//beepboop.googleapis.com',
+        undefined,
         undefined,
         ['scope1', 'scope2'],
       );

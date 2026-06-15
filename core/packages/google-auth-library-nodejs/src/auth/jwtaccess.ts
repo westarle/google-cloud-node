@@ -97,6 +97,9 @@ export class JWTAccess {
     additionalClaims?: Claims,
     scopes?: string | string[],
   ): Headers {
+    if (url && scopes) {
+      throw new Error('Both url and scopes cannot be provided simultaneously');
+    }
     // Return cached authorization headers, unless we are within
     // eagerRefreshThresholdMillis ms of them expiring:
     const key = this.getCachedKey(url, scopes);

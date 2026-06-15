@@ -172,7 +172,7 @@ export class JWT extends OAuth2Client implements IdTokenProvider {
           this.universeDomain !== DEFAULT_UNIVERSE;
 
         const headers = await this.access.getRequestHeaders(
-          url ?? undefined,
+          (useScopes && scopes) ? undefined : url ?? undefined,
           this.additionalClaims,
           // Scopes take precedent over audience for signing,
           // so we only provide them if `useJWTAccessWithScope` is on or
