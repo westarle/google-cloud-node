@@ -69,6 +69,15 @@ describe('jwtaccess', () => {
     assert.strictEqual('myfakescope', payload.scope);
   });
 
+  it('getRequestHeaders should sign with space-separated scopes if user supplied array of scopes', () => {
+    const client = new JWTAccess(email, keys.private);
+    const headers = client.getRequestHeaders(testUri, undefined, ['scope1', 'scope2']);
+    const decoded = jws.decode(removeBearerFromAuthorizationHeader(headers));
+    assert(decoded);
+    const payload = decoded.payload;
+    assert.strictEqual('scope1 scope2', payload.scope);
+  });
+
   it('getRequestHeaders should sign with default if user did not supply scopes', () => {
     const client = new JWTAccess(email, keys.private);
     const headers = client.getRequestHeaders(testUri);
