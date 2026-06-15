@@ -101,6 +101,34 @@ describe('refresh', () => {
     assert.strictEqual(json.refresh_token, refresh._refreshToken);
   });
 
+  it('fromJSON should default universeDomain to googleapis.com if none is provided', () => {
+    const json = createJSON();
+    const refresh = new UserRefreshClient();
+    refresh.fromJSON(json);
+    assert.strictEqual(refresh.universeDomain, 'googleapis.com');
+  });
+
+  it('fromJSON should throw if a non-default universeDomain is provided in the JSON payload', () => {
+    const json = {
+      ...createJSON(),
+      universe_domain: 'my-universe.goog',
+    };
+    const refresh = new UserRefreshClient();
+    assert.throws(() => {
+      refresh.fromJSON(json);
+    }, /refresh is only supported in the default googleapis.com universe domain/);
+  });
+
+  it('fromJSON should throw if a non-default universeDomain is already configured and not provided in the JSON payload', () => {
+    const json = createJSON();
+    const refresh = new UserRefreshClient({
+      universeDomain: 'custom-universe.goog',
+    });
+    assert.throws(() => {
+      refresh.fromJSON(json);
+    }, /refresh is only supported in the default googleapis.com universe domain/);
+  });
+
   it('fromStream should error on null stream', done => {
     const refresh = new UserRefreshClient();
     // Test verifies invalid parameter tests, which requires cast to any.
