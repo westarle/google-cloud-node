@@ -1188,6 +1188,17 @@ describe('googleauth', () => {
       await assert.rejects(auth.getApplicationDefault(), e);
     });
 
+    it('getApplicationDefault should reject with a parsing error when env var points to invalid JSON', async () => {
+      mockEnvVar(
+        'GOOGLE_APPLICATION_CREDENTIALS',
+        './test/fixtures/invalid.json',
+      );
+      await assert.rejects(
+        auth.getApplicationDefault(),
+        /Unable to read the credential file specified by the GOOGLE_APPLICATION_CREDENTIALS environment variable: .*(?:Unexpected token|is not valid JSON)/,
+      );
+    });
+
     it('getApplicationDefault should also get project ID', async () => {
       // Set up the creds.
       // * Environment variable is set up to point to private.json
