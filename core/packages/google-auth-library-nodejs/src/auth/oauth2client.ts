@@ -901,9 +901,10 @@ export class OAuth2Client extends AuthClient {
   }
 
   private async getAccessTokenAsync(): Promise<GetAccessTokenResponse> {
-    const shouldRefresh =
-      !this.credentials.access_token || this.isTokenExpiring();
-    if (shouldRefresh) {
+    const isExpired = !this.credentials.access_token || this.isTokenExpired();
+    const isExpiring = this.isTokenExpiring();
+
+    if (isExpired) {
       if (!this.credentials.refresh_token) {
         if (this.refreshHandler) {
           const refreshedAccessToken =
@@ -924,6 +925,22 @@ export class OAuth2Client extends AuthClient {
         throw new Error('Could not refresh access token.');
       }
       return {token: r.credentials.access_token, res: r.res};
+    } else if (isExpiring) {
+      // Soft-expiration: detach refresh to background
+      if (!this.credentials.refresh_token) {
+        if (this.refreshHandler) {
+          this.processAndValidateRefreshHandler()
+            .then(refreshedAccessToken => {
+              if (refreshedAccessToken?.access_token) {
+                this.setCredentials(refreshedAccessToken);
+              }
+            })
+            .catch(() => {});
+        }
+      } else {
+        this.refreshAccessTokenAsync().catch(() => {});
+      }
+      return {token: this.credentials.access_token};
     } else {
       return {token: this.credentials.access_token};
     }
@@ -959,6 +976,28 @@ export class OAuth2Client extends AuthClient {
     }
 
     if (thisCreds.access_token && !this.isTokenExpiring()) {
+      thisCreds.token_type = thisCreds.token_type || 'Bearer';
+      const headers = new Headers({
+        authorization: thisCreds.token_type + ' ' + thisCreds.access_token,
+      });
+      return {headers: this.addSharedMetadataHeaders(headers)};
+    }
+
+    const isExpired = !thisCreds.access_token || this.isTokenExpired();
+    if (thisCreds.access_token && !isExpired) {
+      // Soft expiration: trigger background refresh and return old token immediately
+      if (this.refreshHandler) {
+        this.processAndValidateRefreshHandler()
+          .then(refreshedAccessToken => {
+            if (refreshedAccessToken?.access_token) {
+              this.setCredentials(refreshedAccessToken);
+            }
+          })
+          .catch(() => {});
+      } else if (thisCreds.refresh_token) {
+        this.refreshAccessTokenAsync().catch(() => {});
+      }
+
       thisCreds.token_type = thisCreds.token_type || 'Bearer';
       const headers = new Headers({
         authorization: thisCreds.token_type + ' ' + thisCreds.access_token,
@@ -1598,6 +1637,17 @@ export class OAuth2Client extends AuthClient {
     const expiryDate = this.credentials.expiry_date;
     return expiryDate
       ? expiryDate <= new Date().getTime() + this.eagerRefreshThresholdMillis
+      : false;
+  }
+
+  /**
+   * Returns true if a token is strictly expired.
+   * If there is no expiry time, assumes the token is not expired.
+   */
+  protected isTokenExpired(): boolean {
+    const expiryDate = this.credentials.expiry_date;
+    return expiryDate
+      ? expiryDate <= new Date().getTime()
       : false;
   }
 }

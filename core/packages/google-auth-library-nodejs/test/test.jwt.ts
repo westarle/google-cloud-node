@@ -384,9 +384,12 @@ describe('jwt', () => {
 
     const scope = createGTokenMock({access_token: 'abc123'});
     jwt.request({url: 'http://bar'}, () => {
-      scope.done();
-      assert.strictEqual('abc123', jwt.credentials.access_token);
-      done();
+      // Token refreshes in the background, wait for it
+      setTimeout(() => {
+        assert.strictEqual('abc123', jwt.credentials.access_token);
+        scope.done();
+        done();
+      }, 50);
     });
   });
 
@@ -431,9 +434,11 @@ describe('jwt', () => {
     const scope = createGTokenMock({access_token: 'abc123'});
 
     jwt.request({url: 'http://example.com/access'}, () => {
-      scope.done();
-      assert.strictEqual('abc123', jwt.credentials.access_token);
-      done();
+      setTimeout(() => {
+        assert.strictEqual('abc123', jwt.credentials.access_token);
+        scope.done();
+        done();
+      }, 50);
     });
   });
 

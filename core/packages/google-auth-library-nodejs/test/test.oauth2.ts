@@ -1087,6 +1087,8 @@ describe('oauth2', () => {
       };
       const scopes = mockExample();
       await client.request({url: 'http://example.com'});
+      // Token refreshes in the background, wait for it
+      await new Promise(resolve => setTimeout(resolve, 50));
       assert.strictEqual('abc123', client.credentials.access_token);
       scopes.forEach(s => s.done());
     });
@@ -1689,6 +1691,56 @@ describe('oauth2', () => {
         await client.getRequestHeaders('http://example.com');
 
       assert.deepStrictEqual(requestMetaData, expectedMetadata);
+    });
+
+    it('should return token instantly and refresh in background when soft-expired', async () => {
+      let resolveBackgroundMock: (val: any) => void = () => {};
+      const backgroundMockPromise = new Promise(resolve => {
+        resolveBackgroundMock = resolve;
+      });
+
+      // 5 min eager refresh window, set token to expire in 2 minutes (120000ms)
+      client.credentials = {
+        access_token: 'initial-access-token',
+        refresh_token: 'refresh-token',
+        expiry_date: new Date().getTime() + 120000,
+      };
+
+      // Mock the refresh request
+      const scope = nock(baseUrl)
+        .post('/token')
+        .reply(async () => {
+          await backgroundMockPromise;
+          return [
+            200,
+            {
+              access_token: 'refreshed-access-token',
+              expires_in: 3600,
+            },
+          ];
+        });
+
+      const startTime = Date.now();
+      const requestMetaData =
+        await client.getRequestHeaders('http://example.com');
+      const elapsedTime = Date.now() - startTime;
+
+      // The call should return instantly without waiting for the network mock
+      assert.ok(elapsedTime < 50, `Expected instant resolution, but took ${elapsedTime}ms`);
+      assert.strictEqual(
+        requestMetaData.get('authorization'),
+        'Bearer initial-access-token'
+      );
+
+      // Now resolve the background refresh mock so it completes
+      resolveBackgroundMock(null);
+
+      // Wait a tick for the promise chain to settle
+      await new Promise(resolve => setTimeout(resolve, 50));
+
+      // Token should now be refreshed
+      assert.strictEqual(client.credentials.access_token, 'refreshed-access-token');
+      scope.done();
     });
 
     it('should throw on getRequestHeaders() when neither refreshHandler nor refresh token is available', async () => {
