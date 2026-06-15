@@ -515,6 +515,13 @@ export class GoogleAuth<T extends AuthClient = AuthClient> {
       return await this.#prepareAndCacheClient(credential);
     }
 
+    // Determine if we're running on App Engine
+    const env = await this.getEnv();
+    if (env === GCPEnv.APP_ENGINE) {
+      (options as ComputeOptions).scopes = this.getAnyScopes();
+      return await this.#prepareAndCacheClient(new Compute(options));
+    }
+
     // Determine if we're running on GCE.
     if (await this._checkIsGCE()) {
       (options as ComputeOptions).scopes = this.getAnyScopes();

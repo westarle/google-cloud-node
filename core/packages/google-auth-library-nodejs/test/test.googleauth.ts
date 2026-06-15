@@ -1176,6 +1176,20 @@ describe('googleauth', () => {
       );
     });
 
+    it('getApplicationDefault should use App Engine fallback when GAE_SERVICE is set', async () => {
+      mockEnvVar('GAE_SERVICE', 'KITTY');
+      envDetect.clear();
+      sandbox.stub(auth, '_checkIsGCE').rejects(new Error('Should not check GCE if explicitly detected App Engine'));
+      const scopes = [createGetProjectIdNock()];
+      const res = await auth.getApplicationDefault();
+      scopes.forEach(x => x.done());
+      assert.strictEqual(
+        'compute-placeholder',
+        (res.credential as OAuth2Client).credentials.refresh_token,
+      );
+      envDetect.clear();
+    });
+
     it('getApplicationDefault should report GCE error when checking for GCE fails', async () => {
       // Set up the creds.
       // * Environment variable is not set.
