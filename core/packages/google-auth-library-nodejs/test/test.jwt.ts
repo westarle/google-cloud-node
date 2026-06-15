@@ -202,7 +202,6 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       key: keys.private,
-      subject: 'ignored@subjectaccount.com',
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
     const testUri = 'http:/example.com/my_test_service';
@@ -224,7 +223,6 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       key: keys.private,
       keyId: '101',
-      subject: 'ignored@subjectaccount.com',
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
 
@@ -246,7 +244,6 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       key: keys.private,
-      subject: 'ignored@subjectaccount.com',
       additionalClaims: {someClaim},
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
@@ -268,7 +265,6 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       key: keys.private,
-      subject: 'ignored@subjectaccount.com',
       additionalClaims: {target_audience: 'applause'},
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
@@ -764,7 +760,6 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       key: PEM_CONTENTS,
-      subject: 'ignored@subjectaccount.com',
     });
 
     const scope = createGTokenMock({id_token: 'abc123'});
@@ -777,7 +772,6 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       key: PEM_CONTENTS,
-      subject: 'ignored@subjectaccount.com',
     });
 
     const scope = createGTokenMock({access_token: 'a-token'});
@@ -1092,7 +1086,6 @@ describe('jwt', () => {
       const jwt = new JWT({
         email: 'foo@serviceaccount.com',
         key: keys.private,
-        subject: 'ignored@subjectaccount.com',
         additionalClaims: {target_audience: 'beepboop'},
       });
       jwt.defaultScopes = ['foo', 'bar'];
