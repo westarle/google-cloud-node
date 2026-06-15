@@ -1119,7 +1119,33 @@ export class OAuth2Client extends AuthClient {
     reAuthRetried = false,
   ): Promise<GaxiosResponse<T>> {
     try {
-      const r = await this.getRequestMetadataAsync();
+      let r: RequestMetadataResponse;
+      if (opts.signal) {
+        if (opts.signal.aborted) {
+          const err = new Error('The operation was aborted.');
+          err.name = 'AbortError';
+          throw err;
+        }
+        let onAbort: () => void;
+        const abortPromise = new Promise<never>((_, reject) => {
+          onAbort = () => {
+            const err = new Error('The operation was aborted.');
+            err.name = 'AbortError';
+            reject(err);
+          };
+          opts.signal!.addEventListener('abort', onAbort);
+        });
+        try {
+          r = await Promise.race([
+            this.getRequestMetadataAsync(),
+            abortPromise,
+          ]);
+        } finally {
+          opts.signal.removeEventListener('abort', onAbort!);
+        }
+      } else {
+        r = await this.getRequestMetadataAsync();
+      }
       opts.headers = Gaxios.mergeHeaders(opts.headers);
 
       this.addUserProjectAndAuthHeaders(opts.headers, r.headers);

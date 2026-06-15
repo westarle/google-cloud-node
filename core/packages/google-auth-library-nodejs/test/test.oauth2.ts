@@ -1091,6 +1091,45 @@ describe('oauth2', () => {
       scopes.forEach(s => s.done());
     });
 
+    it('should abort request early if AbortSignal is aborted during token refresh', async () => {
+      const client = new OAuth2Client({
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        redirectUri: REDIRECT_URI,
+      });
+      client.credentials = {refresh_token: 'refresh-token-placeholder'};
+
+      // Mock a slow token response (e.g. 2 seconds delay)
+      const scopes = [
+        nock(baseUrl)
+          .post('/token')
+          .delay(2000)
+          .reply(200, {access_token: 'abc123', expires_in: 3600}),
+      ];
+
+      const controller = new AbortController();
+      const startTime = Date.now();
+
+      const requestPromise = client.request({
+        url: 'http://example.com',
+        signal: controller.signal,
+      });
+
+      // Abort after 50ms
+      setTimeout(() => {
+        controller.abort();
+      }, 50);
+
+      await assert.rejects(requestPromise, (err: any) => {
+        return err.name === 'AbortError' || err.code === 'ABORT_ERR' || err.message === 'The user aborted a request.' || err.message === 'The operation was aborted.';
+      });
+
+      const duration = Date.now() - startTime;
+      assert(duration < 1000, `Request took too long to abort: ${duration}ms`);
+
+      scopes.forEach(s => s.done());
+    });
+
     it('should not refresh if access token will not expire soon and time to refresh before expiration is set', async () => {
       const client = new OAuth2Client({
         clientId: CLIENT_ID,
