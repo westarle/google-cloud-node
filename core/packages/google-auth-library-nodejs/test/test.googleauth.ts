@@ -1188,6 +1188,17 @@ describe('googleauth', () => {
       await assert.rejects(auth.getApplicationDefault(), e);
     });
 
+    it('getApplicationDefault should reject when env var points to a file with an unknown credential type', async () => {
+      mockEnvVar(
+        'GOOGLE_APPLICATION_CREDENTIALS',
+        './test/fixtures/unknown_type.json',
+      );
+      await assert.rejects(
+        auth.getApplicationDefault(),
+        /The credential type "invalid_type" is not supported/,
+      );
+    });
+
     it('getApplicationDefault should also get project ID', async () => {
       // Set up the creds.
       // * Environment variable is set up to point to private.json

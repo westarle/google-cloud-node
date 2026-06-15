@@ -798,11 +798,13 @@ export class GoogleAuth<T extends AuthClient = AuthClient> {
     } else if (json.type === GDCH_SERVICE_ACCOUNT_TYPE) {
       client = new GdchClient(options);
       client.fromJSON(json as GdchCredentialsInput);
-    } else {
+    } else if (json.type === 'service_account' || json.type === undefined) {
       (options as JWTOptions).scopes = this.scopes;
       client = new JWT(options);
       this.setGapicJWTValues(client);
       client.fromJSON(json as JWTInput);
+    } else {
+      throw new Error(`The credential type "${json.type}" is not supported.`);
     }
 
     if (preferredUniverseDomain) {

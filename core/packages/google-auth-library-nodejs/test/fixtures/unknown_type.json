@@ -1,0 +1,5 @@
+{
+  "type": "invalid_type",
+  "client_email": "foo@bar.com",
+  "private_key": "private_key"
+}
