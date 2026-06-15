@@ -1119,7 +1119,7 @@ export class OAuth2Client extends AuthClient {
     reAuthRetried = false,
   ): Promise<GaxiosResponse<T>> {
     try {
-      const r = await this.getRequestMetadataAsync();
+      const r = await this.getRequestMetadataAsync(opts.url);
       opts.headers = Gaxios.mergeHeaders(opts.headers);
 
       this.addUserProjectAndAuthHeaders(opts.headers, r.headers);

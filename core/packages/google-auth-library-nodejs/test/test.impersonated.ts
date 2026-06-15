@@ -16,6 +16,7 @@
 
 import * as assert from 'assert';
 import * as nock from 'nock';
+import * as jws from 'jws';
 import {describe, it, afterEach} from 'mocha';
 import {Impersonated, JWT, UserRefreshClient} from '../src';
 import {CredentialRequest} from '../src/auth/credentials';
@@ -123,9 +124,6 @@ describe('impersonated', () => {
 
     const scopes = [
       nock(url).get('/').reply(200),
-      createGTokenMock({
-        access_token: 'abc123',
-      }),
       nock(`https://iamcredentials.${universeDomain}`)
         .post(
           '/v1/projects/-/serviceAccounts/target@project.iam.gserviceaccount.com:generateAccessToken',
@@ -587,6 +585,56 @@ describe('impersonated', () => {
     assert.equal(email, impersonated.getTargetPrincipal());
     assert.equal(resp.keyId, expectedKeyID);
     assert.equal(resp.signedBlob, expectedSignedBlob);
+    scopes.forEach(s => s.done());
+  });
+
+  it('should support source client with self-signed JWT enabled (no OAuth exchange)', async () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const jwt = new JWT({
+      email: 'foo@serviceaccount.com',
+      keyFile: PEM_PATH,
+    });
+
+    const scopes = [
+      nock(url).get('/').reply(200),
+      nock('https://iamcredentials.googleapis.com')
+        .post(
+          '/v1/projects/-/serviceAccounts/target@project.iam.gserviceaccount.com:generateAccessToken',
+          () => {
+            return true;
+          },
+        )
+        .matchHeader('authorization', (val) => {
+          const token = val.replace('Bearer ', '');
+          const decoded = jws.decode(token);
+          assert(decoded);
+          assert.strictEqual(decoded.header.alg, 'RS256');
+          assert.strictEqual(decoded.payload.iss, 'foo@serviceaccount.com');
+          assert.strictEqual(decoded.payload.sub, 'foo@serviceaccount.com');
+          assert.strictEqual(
+            decoded.payload.aud,
+            'https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/target@project.iam.gserviceaccount.com:generateAccessToken',
+          );
+          return true;
+        })
+        .reply(200, {
+          accessToken: 'qwerty345',
+          expireTime: tomorrow.toISOString(),
+        }),
+    ];
+
+    const impersonated = new Impersonated({
+      sourceClient: jwt,
+      targetPrincipal: 'target@project.iam.gserviceaccount.com',
+      lifetime: 30,
+      delegates: [],
+      targetScopes: ['https://www.googleapis.com/auth/cloud-platform'],
+    });
+
+    await impersonated.request({url});
+    assert.strictEqual(impersonated.credentials.access_token, 'qwerty345');
     scopes.forEach(s => s.done());
   });
 });

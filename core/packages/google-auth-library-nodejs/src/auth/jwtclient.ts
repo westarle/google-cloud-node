@@ -119,6 +119,11 @@ export class JWT extends OAuth2Client implements IdTokenProvider {
   protected async getRequestMetadataAsync(
     url?: string | null,
   ): Promise<RequestMetadataResponse> {
+    if (!this.key && this.keyFile) {
+      const creds = await this.getCredentials();
+      this.key = creds.private_key;
+      this.email = creds.client_email ?? this.email;
+    }
     url = this.defaultServicePath ? `https://${this.defaultServicePath}/` : url;
     const useSelfSignedJWT =
       (!this.hasUserScopes() && url) ||

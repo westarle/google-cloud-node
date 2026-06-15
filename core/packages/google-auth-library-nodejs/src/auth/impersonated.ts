@@ -159,7 +159,6 @@ export class Impersonated extends OAuth2Client implements IdTokenProvider {
    * @returns A {@link SignBlobResponse} denoting the keyID and signedBlob in base64 string
    */
   async sign(blobToSign: string): Promise<SignBlobResponse> {
-    await this.sourceClient.getAccessToken();
     const name = `projects/-/serviceAccounts/${this.targetPrincipal}`;
     const u = `${this.endpoint}/v1/${name}:signBlob`;
     const body = {
@@ -185,7 +184,6 @@ export class Impersonated extends OAuth2Client implements IdTokenProvider {
    */
   protected async refreshToken(): Promise<GetTokenResponse> {
     try {
-      await this.sourceClient.getAccessToken();
       const name = 'projects/-/serviceAccounts/' + this.targetPrincipal;
       const u = `${this.endpoint}/v1/${name}:generateAccessToken`;
       const body = {
@@ -240,8 +238,6 @@ export class Impersonated extends OAuth2Client implements IdTokenProvider {
     targetAudience: string,
     options?: FetchIdTokenOptions,
   ): Promise<string> {
-    await this.sourceClient.getAccessToken();
-
     const name = `projects/-/serviceAccounts/${this.targetPrincipal}`;
     const u = `${this.endpoint}/v1/${name}:generateIdToken`;
     const body = {
