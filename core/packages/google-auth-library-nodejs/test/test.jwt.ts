@@ -218,6 +218,21 @@ describe('jwt', () => {
     assert.strictEqual(testUri, payload.aud);
   });
 
+  it('should inject telemetry header cred-type/jwt for self-signed JWT', async () => {
+    const keys = keypair(512 /* bitsize of private key */);
+    const email = 'foo@serviceaccount.com';
+    const jwt = new JWT({
+      email: 'foo@serviceaccount.com',
+      key: keys.private,
+    });
+    jwt.credentials = {refresh_token: 'jwt-placeholder'};
+    const testUri = 'http:/example.com/my_test_service';
+    const got = await jwt.getRequestHeaders(testUri);
+    assert.notStrictEqual(null, got, 'the creds should be present');
+    assert(got.has('x-goog-api-client'));
+    assert(got.get('x-goog-api-client')!.includes('cred-type/jwt'));
+  });
+
   it('gets a jwt header access token with key id', async () => {
     const keys = keypair(512 /* bitsize of private key */);
     const jwt = new JWT({

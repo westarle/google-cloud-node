@@ -141,13 +141,12 @@ export class JWT extends OAuth2Client implements IdTokenProvider {
         ).target_audience
       ) {
         const {tokens} = await this.refreshToken();
-        return {
-          headers: this.addSharedMetadataHeaders(
-            new Headers({
-              authorization: `Bearer ${tokens.id_token}`,
-            }),
-          ),
-        };
+        const headers = this.addSharedMetadataHeaders(
+          new Headers({
+            authorization: `Bearer ${tokens.id_token}`,
+          }),
+        );
+        return {headers: this.addTelemetryHeader(headers)};
       } else {
         // no scopes have been set, but a uri has been provided. Use JWTAccess
         // credentials.
@@ -180,7 +179,7 @@ export class JWT extends OAuth2Client implements IdTokenProvider {
           useScopes ? scopes : undefined,
         );
 
-        return {headers: this.addSharedMetadataHeaders(headers)};
+        return {headers: this.addTelemetryHeader(this.addSharedMetadataHeaders(headers))};
       }
     } else if (this.hasAnyScopes() || this.apiKey) {
       return super.getRequestMetadataAsync(url);
@@ -398,6 +397,16 @@ export class JWT extends OAuth2Client implements IdTokenProvider {
    * Using the key or keyFile on the JWT client, obtain an object that contains
    * the key and the client email.
    */
+  private addTelemetryHeader(headers: Headers): Headers {
+    const nodeVersion = process.version.replace(/^v/, '');
+    const current = headers.get('x-goog-api-client') || '';
+    const telemetry = `gl-node/${nodeVersion} cred-type/jwt`;
+    if (!current.includes('cred-type/jwt')) {
+      headers.set('x-goog-api-client', current ? `${current} cred-type/jwt` : telemetry);
+    }
+    return headers;
+  }
+
   async getCredentials(): Promise<CredentialBody> {
     if (this.key) {
       return {private_key: this.key, client_email: this.email};
