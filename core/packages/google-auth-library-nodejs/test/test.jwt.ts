@@ -218,6 +218,20 @@ describe('jwt', () => {
     assert.strictEqual(testUri, payload.aud);
   });
 
+  it('should throw an error when initialized with an invalid private key', async () => {
+    const email = 'foo@serviceaccount.com';
+    const jwt = new JWT({
+      email: 'foo@serviceaccount.com',
+      key: 'this-is-not-a-valid-pem-key',
+    });
+    jwt.credentials = {refresh_token: 'jwt-placeholder'};
+    const testUri = 'http:/example.com/my_test_service';
+    await assert.rejects(
+      jwt.getRequestHeaders(testUri),
+      /DECODER routines::unsupported|key must be a string/,
+    );
+  });
+
   it('gets a jwt header access token with key id', async () => {
     const keys = keypair(512 /* bitsize of private key */);
     const jwt = new JWT({
