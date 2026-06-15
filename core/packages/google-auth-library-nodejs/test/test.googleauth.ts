@@ -1188,6 +1188,29 @@ describe('googleauth', () => {
       await assert.rejects(auth.getApplicationDefault(), e);
     });
 
+    it('getApplicationDefault should respect GCE_METADATA_HOST during GCE check and token acquisition', async () => {
+      const customHost = 'custom-metadata-host:8080';
+      mockEnvVar('GCE_METADATA_HOST', customHost);
+      sandbox.stub(gcpMetadata, 'getGCPResidency').returns(false);
+
+      const primary = nock(`http://${customHost}`)
+        .get(instancePath)
+        .reply(200, {}, HEADERS);
+      const projectIdNock = nock(`http://${customHost}`)
+        .get(`${BASE_PATH}/project/project-id`)
+        .reply(200, STUB_PROJECT, HEADERS);
+
+      const res = await auth.getApplicationDefault();
+
+      primary.done();
+      projectIdNock.done();
+
+      assert.strictEqual(
+        'compute-placeholder',
+        (res.credential as OAuth2Client).credentials.refresh_token,
+      );
+    });
+
     it('getApplicationDefault should also get project ID', async () => {
       // Set up the creds.
       // * Environment variable is set up to point to private.json
