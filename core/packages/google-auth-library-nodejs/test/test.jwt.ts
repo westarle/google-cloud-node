@@ -87,7 +87,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const scope = createGTokenMock({access_token: 'initial-access-token'});
     jwt.authorize((err, creds) => {
@@ -123,7 +123,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: 'http://foo',
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const scope = createGTokenMock({access_token: 'initial-access-token'});
 
@@ -139,7 +139,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
@@ -163,7 +163,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     jwt
       .on('tokens', tokens => {
@@ -180,7 +180,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
 
@@ -283,7 +283,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
     const scope = createGTokenMock({access_token: 'abc123'});
@@ -306,7 +306,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
     await Promise.all([
@@ -331,7 +331,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     jwt.credentials = {refresh_token: 'refresh-token-placeholder'};
     await jwt.request({url: 'http://example.com'});
@@ -346,7 +346,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {
@@ -368,7 +368,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
       eagerRefreshThresholdMillis: 1000,
     });
 
@@ -392,7 +392,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
       eagerRefreshThresholdMillis: 1000,
     });
 
@@ -415,7 +415,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://example.com'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {
@@ -439,7 +439,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {
@@ -461,7 +461,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {
@@ -481,7 +481,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: PEM_PATH,
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     jwt.credentials = {refresh_token: 'jwt-placeholder'};
@@ -503,7 +503,7 @@ describe('jwt', () => {
       keyFile: '/path/to/key.pem',
       keyId: '101',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
 
     const clone = jwt.createScoped('x');
@@ -520,7 +520,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const clone = jwt.createScoped('newscope');
     assert.strictEqual('newscope', clone.scopes);
@@ -531,7 +531,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const clone = jwt.createScoped(['gorilla', 'chimpanzee', 'orangutan']);
     assert.strictEqual(3, clone.scopes!.length);
@@ -545,7 +545,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const clone = jwt.createScoped();
     assert.strictEqual(undefined, clone.scopes);
@@ -555,7 +555,7 @@ describe('jwt', () => {
     const jwt = new JWT({
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const clone = jwt.createScoped('hi');
     assert.strictEqual('hi', clone.scopes);
@@ -576,7 +576,7 @@ describe('jwt', () => {
       email: 'foo@serviceaccount.com',
       keyFile: '/path/to/key.pem',
       scopes: ['http://bar', 'http://foo'],
-      subject: 'bar@subjectaccount.com',
+      //
     });
     const clone = jwt.createScoped('hi');
     assert.notStrictEqual(jwt, clone);
@@ -794,7 +794,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       const headers = await jwt.getRequestHeaders();
       assert.deepStrictEqual(headers, new Headers());
@@ -805,7 +805,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       const headers = await jwt.getRequestHeaders();
@@ -821,7 +821,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = false;
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -843,7 +843,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.defaultScopes = ['scope1', 'scope2'];
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -865,7 +865,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -887,7 +887,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       jwt.defaultScopes = ['scope1, scope2'];
@@ -910,7 +910,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -932,7 +932,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       jwt.defaultScopes = ['scope1', 'scope2'];
@@ -953,7 +953,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       jwt.defaultScopes = ['scope1', 'scope2'];
@@ -976,7 +976,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -998,7 +998,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.useJWTAccessWithScope = true;
       jwt.defaultScopes = ['scope1', 'scope2'];
@@ -1066,7 +1066,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
         universeDomain: 'my-universe.com',
       });
       jwt.useJWTAccessWithScope = true;
@@ -1109,7 +1109,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -1132,7 +1132,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         key: fs.readFileSync(PEM_PATH, 'utf8'),
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       await jwt.getRequestHeaders('https//beepboop.googleapis.com');
@@ -1154,7 +1154,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         keyFile: PEM_PATH,
         scopes: [],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       jwt.useJWTAccessWithScope = false;
@@ -1172,7 +1172,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         keyFile: PEM_PATH,
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       const wantedToken = 'abc123';
@@ -1188,7 +1188,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         keyFile: PEM_PATH,
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       jwt.defaultScopes = ['scope1', 'scope2'];
@@ -1206,7 +1206,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         keyFile: PEM_PATH,
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       const wantedToken = 'abc123';
@@ -1223,7 +1223,7 @@ describe('jwt', () => {
         email: 'foo@serviceaccount.com',
         keyFile: PEM_PATH,
         scopes: ['scope1', 'scope2'],
-        subject: 'bar@subjectaccount.com',
+        //
       });
       jwt.credentials = {refresh_token: 'jwt-placeholder'};
       jwt.defaultScopes = ['scope1', 'scope2'];
