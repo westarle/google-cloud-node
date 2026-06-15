@@ -58,6 +58,9 @@ describe('jwtaccess', () => {
     assert.strictEqual(email, payload.iss);
     assert.strictEqual(email, payload.sub);
     assert.strictEqual(testUri, payload.aud);
+    assert.strictEqual(typeof payload.iat, 'number');
+    assert.strictEqual(typeof payload.exp, 'number');
+    assert.strictEqual(payload.exp - payload.iat, 3600);
   });
 
   it('getRequestHeaders should sign with scopes if user supplied scopes', () => {
