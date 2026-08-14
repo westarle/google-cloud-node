@@ -9,7 +9,7 @@
     "language": "nodejs",
     "library_type": "GAPIC_AUTO",
     "name": "iam",
-    "name_pretty": "Policy Troubleshooter",
+    "name_pretty": "Policy Troubleshooter API",
     "product_documentation": "https://cloud.google.com/policy-intelligence/docs",
     "release_level": "preview",
     "repo": "googleapis/google-cloud-node"
