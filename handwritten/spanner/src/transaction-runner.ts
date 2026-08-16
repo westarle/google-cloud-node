@@ -120,6 +120,7 @@ export abstract class Runner<T> {
   transaction?: Transaction;
   options: RunTransactionOptions;
   multiplexedSessionPreviousTransactionId?: Uint8Array | string;
+  _mutationKey?: google.spanner.v1.IMutation | null;
   constructor(
     session: Session,
     transaction: Transaction,
@@ -217,6 +218,9 @@ export abstract class Runner<T> {
     );
     transaction.multiplexedSessionPreviousTransactionId =
       this.multiplexedSessionPreviousTransactionId;
+    if (this._mutationKey) {
+      (transaction as any)._mutationKey = this._mutationKey;
+    }
     if (this.attempts > 0) {
       await transaction.begin();
     }
@@ -248,6 +252,7 @@ export abstract class Runner<T> {
         lastError = e as grpc.ServiceError;
       } finally {
         this.multiplexedSessionPreviousTransactionId = transaction.id;
+        this._mutationKey = (transaction as any)._mutationKey;
       }
 
       // Note that if the error is a 'Session not found' error, it will be
