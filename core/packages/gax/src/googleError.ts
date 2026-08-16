@@ -70,7 +70,7 @@ export class GoogleError extends Error {
 
   // Parse http JSON error and promote google.rpc.ErrorInfo if exist.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static parseHttpError(json: any): GoogleError {
+  static parseHttpError(json: any, root?: protobuf.Root): GoogleError {
     if (Array.isArray(json)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       json = json.find((obj: any) => {
@@ -93,7 +93,7 @@ export class GoogleError extends Error {
         });
     }
 
-    const decoder = new GoogleErrorDecoder();
+    const decoder = new GoogleErrorDecoder(root);
     const proto3Error = decoder.decodeHTTPError(json['error']);
     const error = Object.assign(
       new GoogleError(json['error']['message']),
@@ -289,15 +289,54 @@ const convertUnknownDetailsToResourceInfoError = (
   return unknownDetailsAsResourceInfoError;
 };
 
+function removeDuplicates(
+  target: protobuf.Root,
+  json: any,
+  path: string[] = [],
+) {
+  if (json.nested) {
+    for (const key of Object.keys(json.nested)) {
+      const currentPath = [...path, key];
+      const fullName = currentPath.join('.');
+      const resolved = target.lookup(fullName);
+      if (resolved) {
+        if (
+          resolved instanceof protobuf.Type ||
+          resolved instanceof protobuf.Enum
+        ) {
+          delete json.nested[key];
+        } else {
+          // It is a namespace, recurse.
+          removeDuplicates(target, json.nested[key], currentPath);
+          // If after recursion, the namespace is empty, we can delete it.
+          if (
+            !json.nested[key].nested ||
+            Object.keys(json.nested[key].nested).length === 0
+          ) {
+            delete json.nested[key];
+          }
+        }
+      }
+    }
+  }
+}
+
 export class GoogleErrorDecoder {
   root: protobuf.Root;
   anyType: protobuf.Type;
   statusType: protobuf.Type;
 
-  constructor() {
+  constructor(root?: protobuf.Root) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const errorProtoJson = require('../../build/protos/status.json');
-    this.root = protobuf.Root.fromJSON(errorProtoJson);
+    if (root) {
+      this.root = root;
+      const errorProtoJsonCopy = JSON.parse(JSON.stringify(errorProtoJson));
+      removeDuplicates(this.root, errorProtoJsonCopy);
+      protobuf.Root.fromJSON(errorProtoJsonCopy, this.root);
+    } else {
+      this.root = protobuf.Root.fromJSON(errorProtoJson);
+    }
     this.anyType = this.root.lookupType('google.protobuf.Any');
     this.statusType = this.root.lookupType('google.rpc.Status');
   }

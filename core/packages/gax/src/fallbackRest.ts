@@ -98,7 +98,7 @@ export function decodeResponse(
   }
   const json = JSON.parse(decodedString);
   if (!ok) {
-    const error = GoogleError.parseHttpError(json);
+    const error = GoogleError.parseHttpError(json, rpc.root);
     throw error;
   }
   const message = serializer.fromProto3JSON(rpc.resolvedResponseType!, json);
