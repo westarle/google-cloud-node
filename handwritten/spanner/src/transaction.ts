@@ -2136,6 +2136,15 @@ export class Transaction extends Dml {
     this._options.isolationLevel = IsolationLevel.ISOLATION_LEVEL_UNSPECIFIED;
     this.requestOptions = requestOptions;
     this._retryCommit = false;
+
+    // Disable affinity key for read-write transactions to avoid sporadic
+    // "Failed to initialize transaction due to invalid mutation key" errors
+    // caused by backend bug when routing to different frontends.
+    this._affinityKey = undefined;
+    this._bindGaxOpts = undefined;
+    this._unbindGaxOpts = undefined;
+    this.request = this.session.request.bind(this.session);
+    this.requestStream = this.session.requestStream.bind(this.session);
   }
 
   /**
