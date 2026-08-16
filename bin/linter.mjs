@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import {execFileSync, execFile} from 'child_process';
-import {existsSync} from 'fs';
+import {existsSync, readFileSync, writeFileSync} from 'fs';
 import path from 'path';
 import {promisify} from 'util';
 import {ESLint} from 'eslint';
@@ -27,19 +27,32 @@ const tsconfigCache = new Map();
 async function run() {
   try {
     const changedTsFiles = getChangedFiles();
+    const librarianChanged = didLibrarianYamlChange();
 
-    if (changedTsFiles.length === 0) {
-      console.log('No TypeScript files changed. Skipping checks.');
+    if (changedTsFiles.length === 0 && !librarianChanged) {
+      console.log('No relevant files changed. Skipping checks.');
       return;
     }
 
-    // Run ESLint and Type checks in parallel to optimize CPU utilization
-    const [eslintPassed, typeSafetyPassed] = await Promise.all([
-      checkEslint(changedTsFiles),
-      checkTypeSafety(changedTsFiles),
-    ]);
+    const checks = [];
 
-    if (!eslintPassed || !typeSafetyPassed) {
+    if (changedTsFiles.length > 0) {
+      checks.push(checkEslint(changedTsFiles));
+      checks.push(checkTypeSafety(changedTsFiles));
+    } else {
+      checks.push(Promise.resolve(true));
+      checks.push(Promise.resolve(true));
+    }
+
+    if (librarianChanged) {
+      checks.push(checkLibrarian());
+    } else {
+      checks.push(Promise.resolve(true));
+    }
+
+    const [eslintPassed, typeSafetyPassed, librarianPassed] = await Promise.all(checks);
+
+    if (!eslintPassed || !typeSafetyPassed || !librarianPassed) {
       throw new Error('Linter checks failed. Please fix. To rerun the linter, run: npm run lint');
     }
   } catch (err) {
@@ -225,6 +238,110 @@ async function checkTypeSafety(filesToCheck) {
 
   const results = await Promise.all(checks);
   return results.every(r => r.passed);
+}
+
+// --- Librarian Checker ---
+
+/**
+ * Checks if librarian.yaml changed comparing against target branches/references.
+ */
+function didLibrarianYamlChange() {
+  const base = process.env.GITHUB_BASE_REF || 'main';
+  const refsToTry = [
+    base,
+    `upstream/${base}`,
+    `origin/${base}`,
+    'FETCH_HEAD',
+    'HEAD~1',
+    'HEAD^',
+  ];
+
+  for (const ref of refsToTry) {
+    try {
+      const output = runGit([
+        'diff',
+        '--name-only',
+        ref,
+        '--',
+        'librarian.yaml',
+      ]);
+      if (output.trim().length > 0) {
+        return true;
+      }
+    } catch {
+      // Continue to the next fallback ref
+    }
+  }
+
+  // Fallback to checking uncommitted working tree changes against HEAD
+  try {
+    const output = runGit([
+      'diff',
+      '--name-only',
+      'HEAD',
+      '--',
+      'librarian.yaml',
+    ]);
+    return output.trim().length > 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Runs librarian tidy and checks if it makes any changes.
+ * If it does, it fails and prints repair steps.
+ */
+async function checkLibrarian() {
+  console.log('\nChecking librarian.yaml...');
+
+  try {
+    const contentBefore = readFileSync('librarian.yaml', 'utf8');
+    const match = contentBefore.match(/^\s*version:\s*(v?\d+\.\d+\.\d+)/m);
+    if (!match) {
+      console.error('[ERROR] Could not find version in librarian.yaml');
+      return false;
+    }
+    const version = match[1];
+
+    // Check if go is installed
+    try {
+      execFileSync('go', ['version']);
+    } catch {
+      console.error('[ERROR] "go" command not found. Please install Go to run librarian checks.');
+      return false;
+    }
+
+    console.log(`Running librarian tidy with version ${version}...`);
+    try {
+      execFileSync('go', [
+        'run',
+        `github.com/googleapis/librarian/cmd/librarian@${version}`,
+        'tidy'
+      ], { stdio: 'ignore' });
+    } catch (err) {
+      console.error('[ERROR] Failed to run librarian tidy:', err.message);
+      return false;
+    }
+
+    const contentAfter = readFileSync('librarian.yaml', 'utf8');
+
+    if (contentBefore !== contentAfter) {
+      console.error('\n[ERROR] librarian.yaml is not tidy.');
+      console.error('To repair, please run the following command:');
+      console.error(`  go run github.com/googleapis/librarian/cmd/librarian@${version} tidy`);
+
+      // Revert the changes made by librarian tidy to restore user's working tree
+      writeFileSync('librarian.yaml', contentBefore, 'utf8');
+      return false;
+    }
+
+    console.log('librarian.yaml is tidy.');
+    return true;
+  } catch (err) {
+    console.error('\n[ERROR] Failed running librarian check:', err.message);
+    return false;
+  }
 }
 
 // --- Execution ---
