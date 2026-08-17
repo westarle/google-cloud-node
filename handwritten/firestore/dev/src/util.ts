@@ -234,7 +234,22 @@ export function silencePromise(promise: Promise<unknown>): Promise<void> {
  * @internal
  */
 export function wrapError(err: Error, stack: string): Error {
-  err.stack += '\nCaused by: ' + stack;
+  try {
+    err.stack += '\nCaused by: ' + stack;
+  } catch {
+    try {
+      const newStack = (err.stack || '') + '\nCaused by: ' + stack;
+      Object.defineProperty(err, 'stack', {
+        value: newStack,
+        writable: true,
+        enumerable: false,
+        configurable: true,
+      });
+    } catch {
+      // If stack is completely read-only and non-configurable,
+      // ignore and return the original error.
+    }
+  }
   return err;
 }
 
