@@ -214,7 +214,6 @@ export class LoggingWinston extends TransportStream {
     this.common = new LoggingCommon(options);
   }
 
-  // eslint-disable-next-line
   log(info: any, callback: Callback) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {message, level, splat, stack, ...metadata} = info;
@@ -223,7 +222,23 @@ export class LoggingWinston extends TransportStream {
     // metadata. Errors dont have enumerable properties so they don't
     // destructure.
     if (stack) metadata.stack = stack;
-    this.common.log(info[LEVEL] || level, message, metadata || {}, callback);
+    this.common.log(
+      info[LEVEL] || level,
+      message,
+      metadata || {},
+      (err, apiResponse) => {
+        if (err) {
+          if (callback) {
+            setImmediate(() => callback(null));
+          }
+          this.emit('error', err);
+        } else {
+          if (callback) {
+            callback(null, apiResponse);
+          }
+        }
+      }
+    );
   }
 }
 
