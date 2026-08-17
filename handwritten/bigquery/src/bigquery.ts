@@ -2351,7 +2351,6 @@ export class BigQuery extends Service {
       !!queryObj.clustering ||
       !!queryObj.destinationEncryptionConfiguration ||
       !!queryObj.schemaUpdateOptions ||
-      !!queryObj.jobTimeoutMs ||
       // User has defined the jobID generation behavior
       !!queryObj.jobId
     ) {
@@ -2405,6 +2404,10 @@ export class BigQuery extends Service {
       writeIncrementalResults: queryObj.writeIncrementalResults,
       connectionProperties: queryObj.connectionProperties,
       preserveNulls: queryObj.preserveNulls,
+      jobTimeoutMs:
+        typeof queryObj.jobTimeoutMs === 'number'
+          ? queryObj.jobTimeoutMs.toString()
+          : undefined,
     };
     if (queryObj.jobCreationMode) {
       // override default job creation mode

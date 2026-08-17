@@ -3432,6 +3432,7 @@ describe('BigQuery', () => {
           key: 'value',
         },
         jobCreationMode: 'JOB_CREATION_REQUIRED',
+        jobTimeoutMs: 1000,
       };
       const req = bq.buildQueryRequest_(q, {});
       for (const key in req) {
@@ -3474,6 +3475,7 @@ describe('BigQuery', () => {
         },
         jobCreationMode: 'JOB_CREATION_REQUIRED',
         formatOptions,
+        jobTimeoutMs: '1000',
       };
       assert.deepStrictEqual(req, expectedReq);
     });
