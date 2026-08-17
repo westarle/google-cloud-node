@@ -627,9 +627,7 @@ export class LoggingServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         log_name: request.logName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteLog request %j', request);
     const wrappedCallback:
       | Callback<
@@ -820,9 +818,7 @@ export class LoggingServiceV2Client {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('writeLogEntries request %j', request);
     const wrappedCallback:
       | Callback<
@@ -882,9 +878,7 @@ export class LoggingServiceV2Client {
    * region_tag:logging_v2_generated_LoggingServiceV2_TailLogEntries_async
    */
   tailLogEntries(options?: CallOptions): gax.CancellableStream {
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('tailLogEntries stream %j', options);
     return this.innerApiCalls.tailLogEntries(null, options);
   }
@@ -1009,9 +1003,7 @@ export class LoggingServiceV2Client {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListLogEntriesRequest,
@@ -1105,9 +1097,7 @@ export class LoggingServiceV2Client {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['listLogEntries'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogEntries stream %j', request);
     return this.descriptors.page.listLogEntries.createStream(
       this.innerApiCalls.listLogEntries as GaxCall,
@@ -1185,9 +1175,7 @@ export class LoggingServiceV2Client {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['listLogEntries'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogEntries iterate %j', request);
     return this.descriptors.page.listLogEntries.asyncIterate(
       this.innerApiCalls['listLogEntries'] as GaxCall,
@@ -1288,9 +1276,7 @@ export class LoggingServiceV2Client {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListMonitoredResourceDescriptorsRequest,
@@ -1358,9 +1344,7 @@ export class LoggingServiceV2Client {
     const defaultCallSettings =
       this._defaults['listMonitoredResourceDescriptors'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listMonitoredResourceDescriptors stream %j', request);
     return this.descriptors.page.listMonitoredResourceDescriptors.createStream(
       this.innerApiCalls.listMonitoredResourceDescriptors as GaxCall,
@@ -1407,9 +1391,7 @@ export class LoggingServiceV2Client {
     const defaultCallSettings =
       this._defaults['listMonitoredResourceDescriptors'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listMonitoredResourceDescriptors iterate %j', request);
     return this.descriptors.page.listMonitoredResourceDescriptors.asyncIterate(
       this.innerApiCalls['listMonitoredResourceDescriptors'] as GaxCall,
@@ -1530,9 +1512,7 @@ export class LoggingServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListLogsRequest,
@@ -1621,9 +1601,7 @@ export class LoggingServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLogs'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogs stream %j', request);
     return this.descriptors.page.listLogs.createStream(
       this.innerApiCalls.listLogs as GaxCall,
@@ -1696,9 +1674,7 @@ export class LoggingServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLogs'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogs iterate %j', request);
     return this.descriptors.page.listLogs.asyncIterate(
       this.innerApiCalls['listLogs'] as GaxCall,

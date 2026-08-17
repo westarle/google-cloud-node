@@ -611,9 +611,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('writeUserEvent request %j', request);
     const wrappedCallback:
       | Callback<
@@ -772,9 +770,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('collectUserEvent request %j', request);
     const wrappedCallback:
       | Callback<
@@ -956,9 +952,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -1136,9 +1130,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -1349,9 +1341,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -1531,9 +1521,7 @@ export class UserEventServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<

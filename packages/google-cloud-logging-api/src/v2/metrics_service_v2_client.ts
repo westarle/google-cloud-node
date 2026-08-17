@@ -578,9 +578,7 @@ export class MetricsServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         metric_name: request.metricName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getLogMetric request %j', request);
     const wrappedCallback:
       | Callback<
@@ -709,9 +707,7 @@ export class MetricsServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createLogMetric request %j', request);
     const wrappedCallback:
       | Callback<
@@ -841,9 +837,7 @@ export class MetricsServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         metric_name: request.metricName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateLogMetric request %j', request);
     const wrappedCallback:
       | Callback<
@@ -967,9 +961,7 @@ export class MetricsServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         metric_name: request.metricName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteLogMetric request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1106,9 +1098,7 @@ export class MetricsServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListLogMetricsRequest,
@@ -1178,9 +1168,7 @@ export class MetricsServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLogMetrics'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogMetrics stream %j', request);
     return this.descriptors.page.listLogMetrics.createStream(
       this.innerApiCalls.listLogMetrics as GaxCall,
@@ -1234,9 +1222,7 @@ export class MetricsServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLogMetrics'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLogMetrics iterate %j', request);
     return this.descriptors.page.listLogMetrics.asyncIterate(
       this.innerApiCalls['listLogMetrics'] as GaxCall,

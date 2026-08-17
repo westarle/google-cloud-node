@@ -758,9 +758,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getBucket request %j', request);
     const wrappedCallback:
       | Callback<
@@ -897,9 +895,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createBucket request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1046,9 +1042,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateBucket request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1183,9 +1177,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteBucket request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1317,9 +1309,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('undeleteBucket request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1447,9 +1437,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getView request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1584,9 +1572,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createView request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1729,9 +1715,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateView request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1862,9 +1846,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteView request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1995,9 +1977,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         sink_name: request.sinkName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getSink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2148,9 +2128,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createSink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2318,9 +2296,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         sink_name: request.sinkName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateSink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2453,9 +2429,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         sink_name: request.sinkName ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteSink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2582,9 +2556,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getLink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2715,9 +2687,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getExclusion request %j', request);
     const wrappedCallback:
       | Callback<
@@ -2854,9 +2824,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createExclusion request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3000,9 +2968,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateExclusion request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3133,9 +3099,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteExclusion request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3280,9 +3244,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getCmekSettings request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3447,9 +3409,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateCmekSettings request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3596,9 +3556,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getSettings request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3759,9 +3717,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateSettings request %j', request);
     const wrappedCallback:
       | Callback<
@@ -3920,9 +3876,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -4114,9 +4068,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -4296,9 +4248,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -4471,9 +4421,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -4645,9 +4593,7 @@ export class ConfigServiceV2Client {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -4815,9 +4761,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListBucketsRequest,
@@ -4894,9 +4838,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listBuckets'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listBuckets stream %j', request);
     return this.descriptors.page.listBuckets.createStream(
       this.innerApiCalls.listBuckets as GaxCall,
@@ -4957,9 +4899,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listBuckets'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listBuckets iterate %j', request);
     return this.descriptors.page.listBuckets.asyncIterate(
       this.innerApiCalls['listBuckets'] as GaxCall,
@@ -5061,9 +5001,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListViewsRequest,
@@ -5134,9 +5072,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listViews'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listViews stream %j', request);
     return this.descriptors.page.listViews.createStream(
       this.innerApiCalls.listViews as GaxCall,
@@ -5191,9 +5127,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listViews'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listViews iterate %j', request);
     return this.descriptors.page.listViews.asyncIterate(
       this.innerApiCalls['listViews'] as GaxCall,
@@ -5297,9 +5231,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListSinksRequest,
@@ -5372,9 +5304,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listSinks'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listSinks stream %j', request);
     return this.descriptors.page.listSinks.createStream(
       this.innerApiCalls.listSinks as GaxCall,
@@ -5431,9 +5361,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listSinks'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listSinks iterate %j', request);
     return this.descriptors.page.listSinks.asyncIterate(
       this.innerApiCalls['listSinks'] as GaxCall,
@@ -5534,9 +5462,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListLinksRequest,
@@ -5606,9 +5532,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLinks'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLinks stream %j', request);
     return this.descriptors.page.listLinks.createStream(
       this.innerApiCalls.listLinks as GaxCall,
@@ -5662,9 +5586,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listLinks'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listLinks iterate %j', request);
     return this.descriptors.page.listLinks.asyncIterate(
       this.innerApiCalls['listLinks'] as GaxCall,
@@ -5768,9 +5690,7 @@ export class ConfigServiceV2Client {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.logging.v2.IListExclusionsRequest,
@@ -5843,9 +5763,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listExclusions'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listExclusions stream %j', request);
     return this.descriptors.page.listExclusions.createStream(
       this.innerApiCalls.listExclusions as GaxCall,
@@ -5902,9 +5820,7 @@ export class ConfigServiceV2Client {
       });
     const defaultCallSettings = this._defaults['listExclusions'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listExclusions iterate %j', request);
     return this.descriptors.page.listExclusions.asyncIterate(
       this.innerApiCalls['listExclusions'] as GaxCall,

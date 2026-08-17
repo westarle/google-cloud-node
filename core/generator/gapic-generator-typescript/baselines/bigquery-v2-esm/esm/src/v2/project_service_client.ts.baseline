@@ -472,9 +472,7 @@ export class ProjectServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getServiceAccount request %j', request);
     const wrappedCallback:
       | Callback<

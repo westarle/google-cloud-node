@@ -458,9 +458,7 @@ export class TestServiceClient {
     }
     options.otherArgs.headers['x-goog-request-params'] =
       this._gaxModule.routingHeader.fromParams(routingParameter);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('fastFibonacci request %j', request);
     const wrappedCallback:
       | Callback<
@@ -609,9 +607,7 @@ export class TestServiceClient {
     }
     options.otherArgs.headers['x-goog-request-params'] =
       this._gaxModule.routingHeader.fromParams(routingParameter);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('randomFibonacci request %j', request);
     const wrappedCallback:
       | Callback<
@@ -778,9 +774,7 @@ export class TestServiceClient {
     }
     options.otherArgs.headers['x-goog-request-params'] =
       this._gaxModule.routingHeader.fromParams(routingParameter);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('slowFibonacci request %j', request);
     const wrappedCallback:
       | Callback<

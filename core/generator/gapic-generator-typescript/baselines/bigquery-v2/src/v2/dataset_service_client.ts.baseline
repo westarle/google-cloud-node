@@ -468,9 +468,7 @@ export class DatasetServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -596,9 +594,7 @@ export class DatasetServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('insertDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -739,9 +735,7 @@ export class DatasetServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('patchDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -884,9 +878,7 @@ export class DatasetServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1025,9 +1017,7 @@ export class DatasetServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1168,9 +1158,7 @@ export class DatasetServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('undeleteDataset request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1320,9 +1308,7 @@ export class DatasetServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.cloud.bigquery.v2.IListDatasetsRequest,
@@ -1397,9 +1383,7 @@ export class DatasetServiceClient {
       });
     const defaultCallSettings = this._defaults['listDatasets'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listDatasets stream %j', request);
     return this.descriptors.page.listDatasets.createStream(
       this.innerApiCalls.listDatasets as GaxCall,
@@ -1458,9 +1442,7 @@ export class DatasetServiceClient {
       });
     const defaultCallSettings = this._defaults['listDatasets'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listDatasets iterate %j', request);
     return this.descriptors.page.listDatasets.asyncIterate(
       this.innerApiCalls['listDatasets'] as GaxCall,

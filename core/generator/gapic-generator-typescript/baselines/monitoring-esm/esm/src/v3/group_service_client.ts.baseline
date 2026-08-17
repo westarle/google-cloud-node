@@ -583,9 +583,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getGroup request %j', request);
     const wrappedCallback:
       | Callback<
@@ -713,9 +711,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createGroup request %j', request);
     const wrappedCallback:
       | Callback<
@@ -841,9 +837,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         'group.name': request.group!.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateGroup request %j', request);
     const wrappedCallback:
       | Callback<
@@ -970,9 +964,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteGroup request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1120,9 +1112,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.monitoring.v3.IListGroupsRequest,
@@ -1203,9 +1193,7 @@ export class GroupServiceClient {
       });
     const defaultCallSettings = this._defaults['listGroups'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listGroups stream %j', request);
     return this.descriptors.page.listGroups.createStream(
       this.innerApiCalls.listGroups as GaxCall,
@@ -1270,9 +1258,7 @@ export class GroupServiceClient {
       });
     const defaultCallSettings = this._defaults['listGroups'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listGroups iterate %j', request);
     return this.descriptors.page.listGroups.asyncIterate(
       this.innerApiCalls['listGroups'] as GaxCall,
@@ -1384,9 +1370,7 @@ export class GroupServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.monitoring.v3.IListGroupMembersRequest,
@@ -1467,9 +1451,7 @@ export class GroupServiceClient {
       });
     const defaultCallSettings = this._defaults['listGroupMembers'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listGroupMembers stream %j', request);
     return this.descriptors.page.listGroupMembers.createStream(
       this.innerApiCalls.listGroupMembers as GaxCall,
@@ -1532,9 +1514,7 @@ export class GroupServiceClient {
       });
     const defaultCallSettings = this._defaults['listGroupMembers'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listGroupMembers iterate %j', request);
     return this.descriptors.page.listGroupMembers.asyncIterate(
       this.innerApiCalls['listGroupMembers'] as GaxCall,

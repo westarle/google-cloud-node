@@ -575,9 +575,7 @@ export class AlertPolicyServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getAlertPolicy request %j', request);
     const wrappedCallback:
       | Callback<
@@ -712,9 +710,7 @@ export class AlertPolicyServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createAlertPolicy request %j', request);
     const wrappedCallback:
       | Callback<
@@ -844,9 +840,7 @@ export class AlertPolicyServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteAlertPolicy request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1000,9 +994,7 @@ export class AlertPolicyServiceClient {
       this._gaxModule.routingHeader.fromParams({
         'alert_policy.name': request.alertPolicy!.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateAlertPolicy request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1159,9 +1151,7 @@ export class AlertPolicyServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.monitoring.v3.IListAlertPoliciesRequest,
@@ -1249,9 +1239,7 @@ export class AlertPolicyServiceClient {
       });
     const defaultCallSettings = this._defaults['listAlertPolicies'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listAlertPolicies stream %j', request);
     return this.descriptors.page.listAlertPolicies.createStream(
       this.innerApiCalls.listAlertPolicies as GaxCall,
@@ -1321,9 +1309,7 @@ export class AlertPolicyServiceClient {
       });
     const defaultCallSettings = this._defaults['listAlertPolicies'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listAlertPolicies iterate %j', request);
     return this.descriptors.page.listAlertPolicies.asyncIterate(
       this.innerApiCalls['listAlertPolicies'] as GaxCall,

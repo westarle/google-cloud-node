@@ -770,9 +770,7 @@ export class EchoClient {
     }
     options.otherArgs.headers['x-goog-request-params'] =
       this._gaxModule.routingHeader.fromParams(routingParameter);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('echo request %j', request);
     const wrappedCallback:
       | Callback<
@@ -907,9 +905,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('echoErrorDetails request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1045,9 +1041,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('pagedExpandLegacy request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1174,9 +1168,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('block request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1249,9 +1241,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('expand stream %j', options);
     return this.innerApiCalls.expand(request, options);
   }
@@ -1304,9 +1294,7 @@ export class EchoClient {
       optionsOrCallback = {};
     }
     const options = optionsOrCallback as CallOptions;
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('collect stream %j', options);
     return this.innerApiCalls.collect(null, options, callback);
   }
@@ -1328,9 +1316,7 @@ export class EchoClient {
    * region_tag:localhost_v1beta1_generated_Echo_Chat_async
    */
   chat(options?: CallOptions): gax.CancellableStream {
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('chat stream %j', options);
     return this.innerApiCalls.chat(null, options);
   }
@@ -1438,9 +1424,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -1593,9 +1577,7 @@ export class EchoClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.showcase.v1beta1.IPagedExpandRequest,
@@ -1656,9 +1638,7 @@ export class EchoClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['pagedExpand'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('pagedExpand stream %j', request);
     return this.descriptors.page.pagedExpand.createStream(
       this.innerApiCalls.pagedExpand as GaxCall,
@@ -1701,9 +1681,7 @@ export class EchoClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['pagedExpand'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('pagedExpand iterate %j', request);
     return this.descriptors.page.pagedExpand.asyncIterate(
       this.innerApiCalls['pagedExpand'] as GaxCall,

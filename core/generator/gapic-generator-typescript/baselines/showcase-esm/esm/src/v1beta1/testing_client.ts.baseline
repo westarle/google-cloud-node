@@ -522,9 +522,7 @@ export class TestingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('createSession request %j', request);
     const wrappedCallback:
       | Callback<
@@ -648,9 +646,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getSession request %j', request);
     const wrappedCallback:
       | Callback<
@@ -774,9 +770,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteSession request %j', request);
     const wrappedCallback:
       | Callback<
@@ -904,9 +898,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('reportSession request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1035,9 +1027,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteTest request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1166,9 +1156,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('verifyTest request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1294,9 +1282,7 @@ export class TestingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.showcase.v1beta1.IListSessionsRequest,
@@ -1355,9 +1341,7 @@ export class TestingClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['listSessions'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listSessions stream %j', request);
     return this.descriptors.page.listSessions.createStream(
       this.innerApiCalls.listSessions as GaxCall,
@@ -1398,9 +1382,7 @@ export class TestingClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['listSessions'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listSessions iterate %j', request);
     return this.descriptors.page.listSessions.asyncIterate(
       this.innerApiCalls['listSessions'] as GaxCall,
@@ -1494,9 +1476,7 @@ export class TestingClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.showcase.v1beta1.IListTestsRequest,
@@ -1559,9 +1539,7 @@ export class TestingClient {
       });
     const defaultCallSettings = this._defaults['listTests'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listTests stream %j', request);
     return this.descriptors.page.listTests.createStream(
       this.innerApiCalls.listTests as GaxCall,
@@ -1608,9 +1586,7 @@ export class TestingClient {
       });
     const defaultCallSettings = this._defaults['listTests'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listTests iterate %j', request);
     return this.descriptors.page.listTests.asyncIterate(
       this.innerApiCalls['listTests'] as GaxCall,

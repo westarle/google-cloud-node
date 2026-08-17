@@ -630,9 +630,7 @@ export class CompletionServiceClient {
       this._gaxModule.routingHeader.fromParams({
         catalog: request.catalog ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('completeQuery request %j', request);
     const wrappedCallback:
       | Callback<
@@ -795,9 +793,7 @@ export class CompletionServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<

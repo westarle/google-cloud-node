@@ -503,9 +503,7 @@ export class JobServiceClient {
         project_id: request.projectId?.toString() ?? '',
         job_id: request.jobId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('cancelJob request %j', request);
     const wrappedCallback:
       | Callback<
@@ -643,9 +641,7 @@ export class JobServiceClient {
         project_id: request.projectId?.toString() ?? '',
         job_id: request.jobId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getJob request %j', request);
     const wrappedCallback:
       | Callback<
@@ -779,9 +775,7 @@ export class JobServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('insertJob request %j', request);
     const wrappedCallback:
       | Callback<
@@ -914,9 +908,7 @@ export class JobServiceClient {
         project_id: request.projectId?.toString() ?? '',
         job_id: request.jobId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteJob request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1084,9 +1076,7 @@ export class JobServiceClient {
         project_id: request.projectId?.toString() ?? '',
         job_id: request.jobId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getQueryResults request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1213,9 +1203,7 @@ export class JobServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('query request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1371,9 +1359,7 @@ export class JobServiceClient {
       this._gaxModule.routingHeader.fromParams({
         project_id: request.projectId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.cloud.bigquery.v2.IListJobsRequest,
@@ -1453,9 +1439,7 @@ export class JobServiceClient {
       });
     const defaultCallSettings = this._defaults['listJobs'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listJobs stream %j', request);
     return this.descriptors.page.listJobs.createStream(
       this.innerApiCalls.listJobs as GaxCall,
@@ -1519,9 +1503,7 @@ export class JobServiceClient {
       });
     const defaultCallSettings = this._defaults['listJobs'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listJobs iterate %j', request);
     return this.descriptors.page.listJobs.asyncIterate(
       this.innerApiCalls['listJobs'] as GaxCall,

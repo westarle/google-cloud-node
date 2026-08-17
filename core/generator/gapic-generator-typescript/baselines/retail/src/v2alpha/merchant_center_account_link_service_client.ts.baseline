@@ -562,9 +562,7 @@ export class MerchantCenterAccountLinkServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listMerchantCenterAccountLinks request %j', request);
     const wrappedCallback:
       | Callback<
@@ -716,9 +714,7 @@ export class MerchantCenterAccountLinkServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteMerchantCenterAccountLink request %j', request);
     const wrappedCallback:
       | Callback<
@@ -884,9 +880,7 @@ export class MerchantCenterAccountLinkServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | Callback<
           LROperation<
