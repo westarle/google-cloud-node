@@ -464,9 +464,7 @@ export class DeprecatedServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('fastFibonacci request %j', request);
     const wrappedCallback:
       | Callback<
@@ -585,9 +583,7 @@ export class DeprecatedServiceClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this.warn(
       'DEP$DeprecatedService-$SlowFibonacci',
       'SlowFibonacci is deprecated and may be removed in a future version.',

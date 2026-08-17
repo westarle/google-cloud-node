@@ -465,9 +465,7 @@ export class ModelServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         model_id: request.modelId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getModel request %j', request);
     const wrappedCallback:
       | Callback<
@@ -599,9 +597,7 @@ export class ModelServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         model_id: request.modelId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('patchModel request %j', request);
     const wrappedCallback:
       | Callback<
@@ -731,9 +727,7 @@ export class ModelServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         model_id: request.modelId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteModel request %j', request);
     const wrappedCallback:
       | Callback<
@@ -879,9 +873,7 @@ export class ModelServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.cloud.bigquery.v2.IListModelsRequest,
@@ -951,9 +943,7 @@ export class ModelServiceClient {
       });
     const defaultCallSettings = this._defaults['listModels'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listModels stream %j', request);
     return this.descriptors.page.listModels.createStream(
       this.innerApiCalls.listModels as GaxCall,
@@ -1005,9 +995,7 @@ export class ModelServiceClient {
       });
     const defaultCallSettings = this._defaults['listModels'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listModels iterate %j', request);
     return this.descriptors.page.listModels.asyncIterate(
       this.innerApiCalls['listModels'] as GaxCall,

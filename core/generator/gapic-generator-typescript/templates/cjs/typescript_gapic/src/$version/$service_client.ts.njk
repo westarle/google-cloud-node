@@ -670,7 +670,7 @@ export class {{ service.name }}Client {
       options = optionsOrCallback as CallOptions;
     }
     {{ util.buildHeaderRequestParam(method) }}
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -747,7 +747,7 @@ export class {{ service.name }}Client {
   {{ method.name.toCamelCase() }}(
       options?: CallOptions):
     gax.CancellableStream {
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -771,7 +771,7 @@ export class {{ service.name }}Client {
     gax.CancellableStream{
     request = request || {};
     {{ util.buildHeaderRequestParam(method) }}
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -817,7 +817,7 @@ export class {{ service.name }}Client {
         optionsOrCallback = {};
     }
     const options = optionsOrCallback as CallOptions;
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -886,7 +886,7 @@ export class {{ service.name }}Client {
       options = optionsOrCallback as CallOptions;
     }
     {{ util.buildHeaderRequestParam(method) }}
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -1002,7 +1002,7 @@ export class {{ service.name }}Client {
       options = optionsOrCallback as CallOptions;
     }
     {{ util.buildHeaderRequestParam(method) }}
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -1046,7 +1046,7 @@ export class {{ service.name }}Client {
     {{ util.buildHeaderRequestParam(method) }}
     const defaultCallSettings = this._defaults['{{method.name.toCamelCase(true)}}'];
     const callSettings = defaultCallSettings.merge(options);
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}
@@ -1085,7 +1085,7 @@ export class {{ service.name }}Client {
     {{ util.buildHeaderRequestParam(method) }}
     const defaultCallSettings = this._defaults['{{method.name.toCamelCase(true)}}'];
     const callSettings = defaultCallSettings.merge(options);
-    this.{{ id.get("initialize") }}().catch(err => {throw err});
+    this.{{ id.get("initialize") }}();
     {%- if method.options and method.options.deprecated %}
     this.warn('DEP${{service.name}}-${{method.name}}','{{method.name}} is deprecated and may be removed in a future version.', 'DeprecationWarning');
     {%- endif %}

@@ -820,9 +820,7 @@ export class LoggingServiceV2Client {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('writeLogEntries request %j', request);
     const wrappedCallback:
       | Callback<

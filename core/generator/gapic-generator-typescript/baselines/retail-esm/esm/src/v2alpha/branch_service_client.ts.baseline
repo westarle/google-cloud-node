@@ -520,9 +520,7 @@ export class BranchServiceClient {
       this._gaxModule.routingHeader.fromParams({
         parent: request.parent ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listBranches request %j', request);
     const wrappedCallback:
       | Callback<
@@ -659,9 +657,7 @@ export class BranchServiceClient {
       this._gaxModule.routingHeader.fromParams({
         name: request.name ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getBranch request %j', request);
     const wrappedCallback:
       | Callback<

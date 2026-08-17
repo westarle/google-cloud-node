@@ -523,9 +523,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('paginatedMethodStream request %j', request);
     const wrappedCallback:
       | Callback<
@@ -640,9 +638,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('paginatedMethodAsync request %j', request);
     const wrappedCallback:
       | Callback<
@@ -757,9 +753,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('checkLongRunningProgress request %j', request);
     const wrappedCallback:
       | Callback<
@@ -875,9 +869,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('initialize request %j', request);
     const wrappedCallback:
       | Callback<
@@ -992,9 +984,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('servicePath request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1109,9 +1099,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('apiEndpoint request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1226,9 +1214,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('port request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1343,9 +1329,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('scopes request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1460,9 +1444,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('getProjectId request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1580,9 +1562,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('getReservedWord request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1699,9 +1679,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('createABCDESomething request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1823,9 +1801,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     const wrappedCallback:
       | Callback<
           LROperation<
@@ -1972,9 +1948,7 @@ export class NamingClient {
     options = options || {};
     options.otherArgs = options.otherArgs || {};
     options.otherArgs.headers = options.otherArgs.headers || {};
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.naming.v1beta1.IPaginatedMethodRequest,
@@ -2032,9 +2006,7 @@ export class NamingClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['paginatedMethod'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('paginatedMethod stream %j', request);
     return this.descriptors.page.paginatedMethod.createStream(
       this.innerApiCalls.paginatedMethod as GaxCall,
@@ -2074,9 +2046,7 @@ export class NamingClient {
     options.otherArgs.headers = options.otherArgs.headers || {};
     const defaultCallSettings = this._defaults['paginatedMethod'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize1().catch((err) => {
-      throw err;
-    });
+    this.initialize1();
     this._log.info('paginatedMethod iterate %j', request);
     return this.descriptors.page.paginatedMethod.asyncIterate(
       this.innerApiCalls['paginatedMethod'] as GaxCall,

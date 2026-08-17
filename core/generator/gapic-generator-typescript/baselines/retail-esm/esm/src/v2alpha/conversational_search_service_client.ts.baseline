@@ -533,9 +533,7 @@ export class ConversationalSearchServiceClient {
       this._gaxModule.routingHeader.fromParams({
         placement: request.placement ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('conversationalSearch stream %j', options);
     return this.innerApiCalls.conversationalSearch(request, options);
   }

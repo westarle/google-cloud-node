@@ -603,9 +603,7 @@ export class PredictionServiceClient {
       this._gaxModule.routingHeader.fromParams({
         placement: request.placement ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('predict request %j', request);
     const wrappedCallback:
       | Callback<

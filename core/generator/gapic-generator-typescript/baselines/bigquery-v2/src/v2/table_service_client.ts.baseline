@@ -480,9 +480,7 @@ export class TableServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         table_id: request.tableId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('getTable request %j', request);
     const wrappedCallback:
       | Callback<
@@ -611,9 +609,7 @@ export class TableServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('insertTable request %j', request);
     const wrappedCallback:
       | Callback<
@@ -758,9 +754,7 @@ export class TableServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         table_id: request.tableId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('patchTable request %j', request);
     const wrappedCallback:
       | Callback<
@@ -907,9 +901,7 @@ export class TableServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         table_id: request.tableId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('updateTable request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1045,9 +1037,7 @@ export class TableServiceClient {
         dataset_id: request.datasetId?.toString() ?? '',
         table_id: request.tableId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('deleteTable request %j', request);
     const wrappedCallback:
       | Callback<
@@ -1190,9 +1180,7 @@ export class TableServiceClient {
         project_id: request.projectId?.toString() ?? '',
         dataset_id: request.datasetId?.toString() ?? '',
       });
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     const wrappedCallback:
       | PaginationCallback<
           protos.google.cloud.bigquery.v2.IListTablesRequest,
@@ -1260,9 +1248,7 @@ export class TableServiceClient {
       });
     const defaultCallSettings = this._defaults['listTables'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listTables stream %j', request);
     return this.descriptors.page.listTables.createStream(
       this.innerApiCalls.listTables as GaxCall,
@@ -1314,9 +1300,7 @@ export class TableServiceClient {
       });
     const defaultCallSettings = this._defaults['listTables'];
     const callSettings = defaultCallSettings.merge(options);
-    this.initialize().catch((err) => {
-      throw err;
-    });
+    this.initialize();
     this._log.info('listTables iterate %j', request);
     return this.descriptors.page.listTables.asyncIterate(
       this.innerApiCalls['listTables'] as GaxCall,
