@@ -767,19 +767,25 @@ describe('Subscriber', () => {
         assert.strictEqual(onSpy.callCount, 0);
       });
 
-      it('should wait for an empty inventory in WaitForProcessing if not empty', async () => {
-        inventory._isEmpty = false;
-        const onSpy = sandbox.spy(inventory, 'on');
+      it('should wait for active user messages to be handled in WaitForProcessing', async () => {
+        const message = new Message(subscriber, RECEIVED_MESSAGE);
+        subscriber._onMessageDispatched(message);
         subscriber.setOptions({
           closeOptions: {
             behavior: s.SubscriberCloseBehaviors.WaitForProcessing,
             timeout: Duration.from({seconds: 2}),
           },
         });
-        const prom = subscriber.close();
-        assert.strictEqual(onSpy.callCount, 1);
-        clock.tick(3000);
+        let resolved = false;
+        const prom = subscriber.close().then(() => {
+          resolved = true;
+        });
+        await clock.tickAsync(100);
+        assert.strictEqual(resolved, false);
+        message.ack();
+        await clock.tickAsync(100);
         await prom;
+        assert.strictEqual(resolved, true);
       });
 
       it('should nack remaining messages if timeout is non-zero', async () => {

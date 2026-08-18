@@ -49,6 +49,7 @@ class FakeSubscriber extends EventEmitter {
     return AckResponses.Success;
   }
   isExactlyOnceDelivery = false;
+  _onMessageDispatched(): void {}
 }
 
 class FakeSubscriberTelemetry {

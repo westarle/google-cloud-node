@@ -291,6 +291,7 @@ export class LeaseManager extends EventEmitter {
       message.subSpans.flowEnd();
       process.nextTick(() => {
         message.dispatched();
+        this._subscriber._onMessageDispatched(message);
         logs.callbackDelivery.info(
           'message (ID %s, ackID %s) delivery to user callbacks',
           message.id,

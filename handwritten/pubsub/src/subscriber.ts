@@ -86,6 +86,7 @@ export interface SubscriberCloseOptions {
  * that we should give up and start shutting down cleanly.
  */
 const FINAL_NACK_TIMEOUT = Duration.from({seconds: 1});
+const DEFAULT_FLUSH_TIMEOUT = Duration.from({seconds: 10});
 
 /**
  * Thrown when an error is detected in an ack/nack/modack call, when
@@ -707,6 +708,8 @@ export class Subscriber extends EventEmitter {
   // We keep this separate from ackDeadline, because ackDeadline could
   // end up being bound by min/max deadline configs.
   private _99th: number;
+  private _activeUserMessages = 0;
+  private _allHandledDeferred?: defer.DeferredPromise<void>;
 
   subscriptionProperties?: SubscriptionProperties;
 
@@ -861,6 +864,7 @@ export class Subscriber extends EventEmitter {
    * @private
    */
   async ack(message: Message): Promise<void> {
+    this._onMessageHandled(message);
     const ackTimeSeconds = (Date.now() - message.received) / 1000;
     this.updateAckDeadline(ackTimeSeconds);
 
@@ -903,6 +907,7 @@ export class Subscriber extends EventEmitter {
    * @private
    */
   async ackWithResponse(message: Message): Promise<AckResponse> {
+    this._onMessageHandled(message);
     const ackTimeSeconds = (Date.now() - message.received) / 1000;
     this.updateAckDeadline(ackTimeSeconds);
 
@@ -977,10 +982,15 @@ export class Subscriber extends EventEmitter {
     const behavior =
       options?.behavior ?? SubscriberCloseBehaviors.NackImmediately;
 
+    const defaultTimeout =
+      behavior === SubscriberCloseBehaviors.NackImmediately
+        ? Duration.from({seconds: 5})
+        : this.maxExtensionTime;
+
     // The timeout can't realistically be longer than the longest time we're willing
     // to lease messages.
     let timeout = durationAtMost(
-      options?.timeout ?? this.maxExtensionTime,
+      options?.timeout ?? defaultTimeout,
       this.maxExtensionTime,
     );
 
@@ -1003,15 +1013,13 @@ export class Subscriber extends EventEmitter {
     const shutdownStart = Date.now();
     if (
       behavior === SubscriberCloseBehaviors.WaitForProcessing &&
-      !this._inventory.isEmpty()
+      this._activeUserMessages > 0
     ) {
       const waitTimeout = timeout.subtract(FINAL_NACK_TIMEOUT);
 
-      const emptyPromise = new Promise<void>(r => {
-        this._inventory.on('empty', r);
-      });
-
-      await this.#awaitTimeoutAndCheck(emptyPromise, waitTimeout);
+      this._allHandledDeferred = defer<void>();
+      await this.#awaitTimeoutAndCheck(this._allHandledDeferred.promise, waitTimeout);
+      this._allHandledDeferred = undefined;
     }
 
     // Now we head into immediate shutdown mode with what time is left.
@@ -1030,7 +1038,8 @@ export class Subscriber extends EventEmitter {
 
     // Wait for user callbacks to complete.
     const flushCompleted = this._waitForFlush();
-    await this.#awaitTimeoutAndCheck(flushCompleted, timeout);
+    const flushWaitTimeout = durationAtMost(timeout, DEFAULT_FLUSH_TIMEOUT);
+    await this.#awaitTimeoutAndCheck(flushCompleted, flushWaitTimeout);
 
     // Clean up OTel spans for any remaining messages.
     remaining.forEach(m => {
@@ -1112,6 +1121,7 @@ export class Subscriber extends EventEmitter {
    * @private
    */
   async nack(message: Message): Promise<void> {
+    this._onMessageHandled(message);
     logs.ackNack.info(
       'message (ID %s, ackID %s) nack',
       message.id,
@@ -1145,6 +1155,7 @@ export class Subscriber extends EventEmitter {
    * @private
    */
   async nackWithResponse(message: Message): Promise<AckResponse> {
+    this._onMessageHandled(message);
     logs.ackNack.info(
       'message (ID %s, ackID %s) nack with response',
       message.id,
@@ -1168,6 +1179,19 @@ export class Subscriber extends EventEmitter {
     this._inventory.remove(message);
 
     return response;
+  }
+
+  /** @internal */
+  _onMessageDispatched(message: Message) {
+    this._activeUserMessages++;
+  }
+
+  /** @internal */
+  _onMessageHandled(message: Message) {
+    this._activeUserMessages--;
+    if (this._activeUserMessages <= 0 && this._allHandledDeferred) {
+      this._allHandledDeferred.resolve();
+    }
   }
 
   /**
