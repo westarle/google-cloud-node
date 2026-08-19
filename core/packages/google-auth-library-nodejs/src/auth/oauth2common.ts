@@ -255,8 +255,9 @@ export function getErrorFromOAuthErrorResponse(
       if (key !== 'message') {
         Object.defineProperty(newError, key, {
           value: (err as {} as {[index: string]: string})[key],
-          writable: false,
-          enumerable: true,
+          writable: key === 'stack',
+          enumerable: key !== 'stack',
+          configurable: true,
         });
       }
     });
