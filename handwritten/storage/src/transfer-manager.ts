@@ -32,7 +32,7 @@ import {GoogleAuth} from 'google-auth-library';
 import {XMLParser, XMLBuilder} from 'fast-xml-parser';
 import AsyncRetry from 'async-retry';
 import {ApiError} from './nodejs-common/index.js';
-import {GaxiosResponse, Headers} from 'gaxios';
+import {GaxiosResponse} from 'gaxios';
 import {createHash} from 'crypto';
 import {GCCL_GCS_CMD_KEY} from './nodejs-common/util.js';
 import {getRuntimeTrackingString, getUserAgentString} from './util.js';
@@ -220,7 +220,7 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
     };
   }
 
-  #setGoogApiClientHeaders(headers: Headers = {}): Headers {
+  #setGoogApiClientHeaders(headers: Record<string, string> = {}): Record<string, string> {
     let headerFound = false;
     let userAgentFound = false;
 
@@ -229,7 +229,7 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
         headerFound = true;
 
         // Prepend command feature to value, if not already there
-        if (!value.includes(GCCL_GCS_CMD_FEATURE.UPLOAD_SHARDED)) {
+        if (!(value as string).includes(GCCL_GCS_CMD_FEATURE.UPLOAD_SHARDED)) {
           headers[key] =
             `${value} gccl-gcs-cmd/${GCCL_GCS_CMD_FEATURE.UPLOAD_SHARDED}`;
         }
@@ -258,7 +258,7 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
    *
    * @returns {Promise<void>}
    */
-  async initiateUpload(headers: Headers = {}): Promise<void> {
+  async initiateUpload(headers: Record<string, string> = {}): Promise<void> {
     const url = `${this.baseUrl}?uploads`;
     return AsyncRetry(async bail => {
       try {
@@ -268,10 +268,10 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
           url,
         });
 
-        if (res.data && res.data.error) {
-          throw res.data.error;
+        if (res.data && (res.data as any).error) {
+          throw (res.data as any).error;
         }
-        const parsedXML = this.xmlParser.parse(res.data);
+        const parsedXML = this.xmlParser.parse(res.data as string);
         this.uploadId = parsedXML.InitiateMultipartUploadResult.UploadId;
       } catch (e) {
         this.#handleErrorResponse(e as Error, bail);
@@ -294,7 +294,7 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
     validation?: 'md5' | 'crc32c' | false,
   ): Promise<void> {
     const url = `${this.baseUrl}?partNumber=${partNumber}&uploadId=${this.uploadId}`;
-    let headers: Headers = this.#setGoogApiClientHeaders();
+    let headers: Record<string, string> = this.#setGoogApiClientHeaders();
 
     if (validation === 'md5') {
       const hash = createHash('md5').update(chunk).digest('base64');
@@ -304,7 +304,7 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
     } else if (validation === 'crc32c') {
       const crc = new CRC32C();
       crc.update(chunk);
-      headers['x-goog-hash'] = `crc32c=${crc.toString()}`;
+      (headers as Record<string, string>)['x-goog-hash'] = `crc32c=${crc.toString()}`;
     }
 
     return AsyncRetry(async bail => {
@@ -315,10 +315,10 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
           body: chunk,
           headers,
         });
-        if (res.data && res.data.error) {
-          throw res.data.error;
+        if (res.data && (res.data as any).error) {
+          throw (res.data as any).error;
         }
-        this.partsMap.set(partNumber, res.headers['etag']);
+        this.partsMap.set(partNumber, (typeof res.headers.get === 'function' ? res.headers.get('etag') : (res.headers as any)['etag']));
       } catch (e) {
         this.#handleErrorResponse(e as Error, bail);
       }
@@ -350,8 +350,8 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
           method: 'POST',
           body,
         });
-        if (res.data && res.data.error) {
-          throw res.data.error;
+        if (res.data && (res.data as any).error) {
+          throw (res.data as any).error;
         }
         return res;
       } catch (e) {
@@ -375,8 +375,8 @@ class XMLMultiPartUploadHelper implements MultiPartUploadHelper {
           url,
           method: 'DELETE',
         });
-        if (res.data && res.data.error) {
-          throw res.data.error;
+        if (res.data && (res.data as any).error) {
+          throw (res.data as any).error;
         }
       } catch (e) {
         this.#handleErrorResponse(e as Error, bail);
@@ -867,7 +867,7 @@ export class TransferManager {
    * @property {Map} [partsMap] If specified alongside uploadId, attempts to resume a previous upload from the last chunk
    * specified in partsMap
    * @property {object} [headers] headers to be sent when initiating the multipart upload.
-   * See {@link https://cloud.google.com/storage/docs/xml-api/post-object-multipart#request_headers| Request Headers: Initiate a Multipart Upload}
+   * See {@link https://cloud.google.com/storage/docs/xml-api/post-object-multipart#request_headers| Request Record<string, string>: Initiate a Multipart Upload}
    * @property {boolean} [autoAbortFailure] boolean to indicate if an in progress upload session will be automatically aborted upon failure. If not set,
    * failures will be automatically aborted.
    *

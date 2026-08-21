@@ -130,9 +130,7 @@ describe('common/util', () => {
         return {token: '', res: undefined};
       }
 
-      async getRequestHeaders() {
-        return {};
-      }
+      async getRequestHeaders(url?: string) { return new Headers() as any; }
 
       request = OAuth2Client.prototype.request.bind(this);
     },
